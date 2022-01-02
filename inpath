@@ -1,0 +1,34 @@
+#!/bin/bash
+
+in_path(){
+	
+	
+  cmd=$1  ourpath=$PATH  result=1
+  oldIFS=$IFS IFS=":"
+
+  for directory in "$ourpath"
+    do 
+      if [-x $directory/$cmd ]; then
+	echo "current val : $directory/$cmd"
+	result=0
+      fi
+    done
+
+  IFS=$oldIFS
+  return $result
+
+
+}
+if [$# -ne 0 ]; then
+  echo "Usage: $0 command" >&2
+  exit 1
+fi
+
+in_path $1
+case $? in
+	0) echo "$1 found in PATH" ;;
+	1) echo "$1 NOT found in PATH" ;;
+esac
+
+exit 0
+
